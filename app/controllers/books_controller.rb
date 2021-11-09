@@ -15,9 +15,11 @@ class BooksController < ApplicationController
   end
 
   def create
-    book=Book.new(book_params)
-    if book.save
-    redirect_to book_path(book.id), notice:'Book was successfully created.'
+    @book=Book.new(book_params)
+    if @book.save
+    redirect_to book_path(@book.id), notice:'Book was successfully created.'
+    else
+      render:index
     end
   end
 
@@ -29,6 +31,8 @@ class BooksController < ApplicationController
     book=Book.find(params[:id])
     if book.update(book_params)
        redirect_to book_path(book.id), notice:'Book was successfully update.'
+    else
+      render:edit
     end
   end
 
@@ -36,8 +40,6 @@ class BooksController < ApplicationController
     book=Book.find(params[:id])
     if book.destroy
        redirect_to books_path, notice:'Book was successfully destroy.'
-        # ネット参照　※book_pathではエラー
-        # :action => 'index'
     end
   end
 
