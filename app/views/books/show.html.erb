@@ -1,8 +1,8 @@
-<%=flash[:notice] %>
+<p id=notice><%=flash[:notice] %></p>
 
-<P>Title:<%=@book.title%></P>
-<p>Body:<%=@book.body%></p>
+<P><strong>Title</strong>:<%=@book.title%></P>
+<p><strong>Body</strong>:<%=@book.body%></p>
 
-<%=link_to"Edit",edit_book_path(@book.id)%>
+<a><%=link_to"Edit",edit_book_path(@book.id)%></a>
 |
-<%= link_to"Back","/books"%>
+<a><%= link_to"Back","/books"%></a>
