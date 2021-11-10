@@ -4,14 +4,13 @@ class BooksController < ApplicationController
 
   def index
     @books=Book.all
+    @book=Book.new
+    # 本来はnewアクション内に記載だが、今回は一覧ページに新規投稿画面が存在している為、
+    # indexアクション内に記載する。
   end
 
   def show
     @book=Book.find(params[:id])
-  end
-
-  def new
-    @book=Book.new
   end
 
   def create
@@ -19,6 +18,8 @@ class BooksController < ApplicationController
     if @book.save
     redirect_to book_path(@book.id), notice:'Book was successfully created.'
     else
+      @books=Book.all
+      # 遷移する先に定義されているインスタンス変数を全部createアクション内に定義する必要がある。
       render:index
     end
   end
@@ -28,9 +29,9 @@ class BooksController < ApplicationController
   end
 
   def update
-    book=Book.find(params[:id])
-    if book.update(book_params)
-       redirect_to book_path(book.id), notice:'Book was successfully update.'
+    @book=Book.find(params[:id])
+    if @book.update(book_params)
+       redirect_to book_path(@book.id), notice:'Book was successfully update.'
     else
       render:edit
     end
@@ -45,7 +46,7 @@ class BooksController < ApplicationController
 
   private
   def book_params
-  params.permit( :title, :body)
+  params.require(:book).permit( :title, :body)
   end
 
 end
