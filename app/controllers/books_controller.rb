@@ -16,7 +16,7 @@ class BooksController < ApplicationController
   def create
     @book=Book.new(book_params)
     if @book.save
-    redirect_to book_path(@book.id), notice:'Book was successfully created.'
+    redirect_to book_path(@book), notice:'Book was successfully created.'
     else
       @books=Book.all
       # 遷移する先に定義されているインスタンス変数を全部createアクション内に定義する必要がある。
